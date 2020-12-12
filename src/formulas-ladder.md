@@ -1,6 +1,6 @@
 # x-only Ladders
 
-A ladder algorithm working over only the \\(x\\) coordinates of points
+A ladder algorithm working only over the \\(x\\) coordinates of points
 can be used to compute Diffie-Hellman key exchanges over double-odd
 elliptic curves. Such ladders are already known, but our formulas are
 a bit faster than what was previously published for such curves.

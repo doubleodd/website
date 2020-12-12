@@ -23,7 +23,7 @@ Some highlights of double-odd elliptic curves are:
     Double-odd elliptic curves are fairly mundane; about 1/4th of all
     elliptic curves are double-odd curves. Such curves are considered
     secure for cryptography, just like any other random elliptic curve
-    with a large enough subgroup with a prime order.
+    with a large enough subgroup of prime order.
 
   - The formulas are *fast* and provide performance at least on par with
     twisted Edwards curves. In some respects they are faster; e.g. point

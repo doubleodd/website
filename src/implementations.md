@@ -23,7 +23,7 @@ do255e and do255s are available:
     [https://github.com/doubleodd/go-do255](https://github.com/doubleodd/go-do255)
 
     The Go implementation is considered correct and secure; all the code
-    is strict constant-time. It is pure Go code that should run on any
+    is strictly constant-time. It is pure Go code that should run on any
     supported Go platform. It internally uses 64-bit types with
     `math/bits` functionalities (especially `Add64()`, `Sub64()` and
     `Mul64()`) which provide decent performance in a portable way on
@@ -44,6 +44,6 @@ do255e and do255s are available:
 
     While this implementation was written for research and demonstration
     purposes, it follows APIs and conventions appropriate for general
-    inclusion in applications. All the code is strict constant-time.
+    inclusion in applications. All the code is strictly constant-time.
     This is the code that was used for the benchmarks reported in
     the [whitepaper](doubleodd.pdf).

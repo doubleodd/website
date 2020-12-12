@@ -6,14 +6,14 @@ interpretation.
 
 For use in cryptography, we work over a finite field \\(\mathbb{F}_q\\)
 of order \\(q\\), typically integers modulo a given prime. All we
-explain here also works over field extensions, in which case \\(q\)) is
+explain here also works over field extensions, in which case \\(q\\) is
 a given power of a prime integer (called the *field characteristic*).
 The only restriction is that the characteristic should not be 2 or 3
 (elliptic curves over such fields use different equations and rules).
 However, finite field are not very visual; the pictures below *pretend*
 that we are using real numbers, where there are such things as
 continuous functions. These pictures are still useful in getting used
-with the underlying ideas.
+to the underlying ideas.
 
 ## Motivation
 
@@ -40,12 +40,12 @@ Point addition is defined as follows:
 
   - When adding two points \\(P\\) and \\(Q\\) together, the line
     \\((PQ)\\) is drawn; it intersects the curve in a third point
-    which is \\(-(P+Q)\\), i.e. the opposite of the sums of \\(P\\)
+    which is \\(-(P+Q)\\), i.e. the opposite of the sum of \\(P\\)
     and \\(Q\\).
 
 This is illustrated by the red lines on the figure. Given the
 coordinates of \\(P\\) and \\(Q\\), the coordinates of \\(P+Q\\) can be
-computed as rational functions of \\(P\\) and \\(Q\)), with coefficients
+computed as rational functions of \\(P\\) and \\(Q\\), with coefficients
 that depend only on the curve parameters. Unfortunately, this process
 has *exceptional cases* which must be handled differently:
 
@@ -66,13 +66,13 @@ has *exceptional cases* which must be handled differently:
 These exceptional cases are mightily inconvenient. The point-at-infinity
 can somehow be handled by switching to fractional coordinates, in which
 each coordinate is represented by a fraction. In that case, infinity
-corresponds to a denumerator value of zero. There are several well-known
+corresponds to a denominator value of zero. There are several well-known
 systems of coordinates that use fractions, e.g. *projective coordinates*
 (\\(x, y) = (X/Z, Y/Z)\\)) or *Jacobian coordinates* (\\(x, y) = (X/Z^2,
 Y/Z^3)\\)). Formulas working on fractional coordinates can be
 established, that will handle infinities, and have the added benefit of
 allowing most computations to be done only with additions, subtractions
-and multiplications, but no divisions. A single division will be needed
+and multiplications, and no divisions. A single division will be needed
 only at the end of a long computation, usually for encoding a point into
 a well-defined sequence of bytes. This promotes performance, because
 divisions are more expensive than multiplications. The *cost* of
@@ -83,7 +83,7 @@ latter being usually somewhat faster than multiplications.
 Handling the exceptional case related to point doublings is harder. This
 case can be detected with a simple test, but this leads to conditional
 execution, i.e. non constant-time behaviour, which is unsafe in all
-generality (timing attacks will detect that occurrence and that leads to
+generality (timing attacks will detect that occurrence which may lead to
 information leaks). In general, one can apply *both* formulas, for
 general addition and for doubling, and select the right one afterwards
 in a constant-time way, but this is expensive. *Complete formulas* that
@@ -93,11 +93,11 @@ implementations of any curve (of odd order), but at a cost: each point
 addition requires 12 multiplications in the field (12M), while
 specialized doubling formulas (when the two operands are statically
 known to be the same point) need 8 multiplications and 3 squarings
-(8M+3S). If we forego completeness, then Jacobian coordinates lead to
-more efficient formulas (especially doublings, in cost 3M+5S), but
-analysis becomes a lot harder because we must take care to prove that no
-exceptional case may be inadvertently reached when using incomplete
-formulas. This can lead, and has lead, to exploitable vulnerabilities.
+(8M+3S). If we forego completeness, Jacobian coordinates lead to more
+efficient formulas (especially doublings, in cost 3M+5S), but analysis
+becomes a lot harder because we must prove that no exceptional case may
+be inadvertently reached when using incomplete formulas. This can lead,
+and has led, to exploitable vulnerabilities.
 
 Apart from this tension between performance and safety, short Weierstraß
 curves can have nice characteristics:
@@ -110,7 +110,7 @@ curves can have nice characteristics:
 
   - With point compression, elements of a curve with \\(2n\\) points and
     offering "\\(n\\)-bit security" can be encoded over \\(2n+1\\) bits.
-    This is the best that you can realistically hope for with elliptic
+    This is the best one can realistically hope for with elliptic
     curves.
 
 ### Twisted Edwards Curves and Montgomery Curves
@@ -120,8 +120,8 @@ curves can have nice characteristics:
 *Twisted Edwards curves* use a different kind of polynomial equation (of
 degree 4) that leads to the shape shown here; the point addition rule is
 somewhat different and harder to represent on a picture (I won't try).
-They are still curves, though, and therefore they can be turned into a
-Weierstraß curves with a birational transform on coordinates. As
+They are still elliptic curves, though, and therefore they can be turned
+into a Weierstraß curves with a birational transform on coordinates. As
 Weierstraß curves, twisted Edwards curves become *Montgomery curves*
 (which were historically discovered before Edwards curves). A well-known
 Montgomery curve is Curve25519 (defined over the field of integers
@@ -133,7 +133,7 @@ works over Curve25519. From a security point of view, they are the same
 curve.
 
 The most interesting aspect of twisted Edwards curves is that point
-addition can be expressed with formulas that have no exceptional case,
+addition can be expressed with formulas that have no exceptional cases,
 and these formulas are substantially more efficient than the ones for
 short Weierstraß curves (8M for general point addition, 4M+4S for point
 doubling).
@@ -189,7 +189,7 @@ verified encoding.
 
 There are a few remaining points where Decaf/Ristretto is suboptimal:
 
-  - The decoding and encoding process both use an inverse square root
+  - The decoding and encoding processes both use an inverse square root
     in the field, which is implemented with a modular exponentiation,
     with a non-negligible cost. Ordinary twisted Edwards curves, and
     short Weierstraß curves, also need a square root for decoding
@@ -199,9 +199,9 @@ There are a few remaining points where Decaf/Ristretto is suboptimal:
     [faster methods exist](https://eprint.iacr.org/2020/972). Decaf
     and Ristretto cannot leverage that.
 
-  - The cofactor still requires some space: for \((n\))-bit security,
-    the curve must work over a field of size \((2n+2\\) bits (for Decaf)
-    or \((2n+3\\) bits (for Ristretto), leading to the same size
+  - The cofactor still requires some space: for \\(n\\)-bit security,
+    the curve must work over a field of size \\(2n+2\\) bits (for Decaf)
+    or \\(2n+3\\) bits (for Ristretto), leading to the same size
     requirement for encoding.
 
 And, more generally, while the currently known formulas for twisted
@@ -232,7 +232,7 @@ Let's consider a curve \\(E\\) with order \\(2r\\) for some odd integer
 
 A double-odd curve necessarily has a single point of order 2, i.e. a point
 which, added to itself, yields the point-at-infinity. Equivalently, points
-or order 2 are points with \\(y = 0\\). Let's call \\(N\\) that point.
+or order 2 are points with \\(y = 0\\). Let's call that point \\(N\\).
 
 With a simple change of variable (adding a constant to the \\(x\\)
 coordinate), we can always arrange for \\(N\\) to be the point \\((0,
@@ -244,8 +244,8 @@ equations: \\(y^2 = x(x^2 + ax + b)\\) for two constants \\(a\\) and
 Mathematical analysis shows that for all double-odd elliptic curves, we
 get such an equation such that neither \\(b\\) nor \\(a^2 - 4b\\) is a
 square in the field. The converse is also true: all curves with equation
-\\(y^2 = x(x^2 + ax + b)\\) where \\(b\\) and \\(a^2 - 4b\\) are
-non-squares are double-odd curves.
+\\(y^2 = x(x^2 + ax + b)\\) with non-square \\(b\\) and \\(a^2 - 4b\\)
+are double-odd curves.
 
 Given a double-odd elliptic curve with order \\(2r\\), there is a subgroup
 of order \\(r\\), which consists in all the points that, multiplied by
@@ -306,10 +306,10 @@ At that point, we can **encode** and **decode** elements of \\(E[r]\\):
     equation, which involves a square root computation), then keeping
     the solution \\(x\\) which is a square.
 
-Note that encoding requires only an inversion (thus, this is as fast as
-with twisted Edwards curves) while decoding uses a square root *and* a
-square detection (Legendre symbol), which would make it slower than
-twisted Edwards curves and Decaf/Ristretto. However, practical
+Note that encoding only requires a single inversion (thus, this is as
+fast as with twisted Edwards curves) while decoding uses a square root
+*and* a square detection (Legendre symbol), which would make it slower
+than twisted Edwards curves and Decaf/Ristretto. However, practical
 implementation of inversion and Legendre symbol can be quite fast; on
 small microcontrollers based on the ARM Cortex M0+, inversion and
 Legendre symbol can be computed in, respectively, 1/5th and 1/6th of the
@@ -332,9 +332,9 @@ that point has well-defined \\(x\\) and \\(y\\) coordinates). We then
 have two tricky points: the point-at-infinity, and \\(N\\). As will be
 exposed later on, we can avoid the point-at-infinity altogether. Point
 \\(N\\) can be represented with fractional representations with a
-denominator equal to 0. Another solution (which we also use) is to use
-not \\(w = y/x\\) but \\(u = x/y\\) which can be extended to \\(u = 0\\)
-for the point \\(N\\) without breaking formulas.
+denominator equal to 0. Another solution (which we also leverage) is to
+use \\(u = x/y\\) (instead of \\(w = y/x\\)) which can be extended to
+\\(u = 0\\) for the point \\(N\\) without breaking formulas.
 
 ### Point Addition and Unified Formulas
 
@@ -388,9 +388,9 @@ law on \\(\mathbb{G}\\) as follows:
   - Neutral element is \\(N\\).
 
   - The opposite of \\(P+N\\) is \\(-P+N\\) (which is equal to
-    \\(-(P+N)\\) and thus corresponds to negation of the \\(y\\),
-    \\(w\\) or \\(u\\) coordinate, whichever coordinate system we are
-    using).
+    \\(-(P+N)\\) and thus corresponds to the negation of the \\(y\\),
+    \\(w\\) or \\(u\\) coordinate, depending on whichever coordinate
+    system we are using).
 
   - The addition in \\(\mathbb{G}\\) (here denoted with \\( * \\)) is:
     \\[\begin{eqnarray*}
