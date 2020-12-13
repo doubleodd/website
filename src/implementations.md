@@ -40,7 +40,7 @@ do255e and do255s are available:
       - C code with some inline assembly for 64-bit x86 with BMI2 and ADX
         opcodes (e.g. Intel Skylake and later cores)
       - C code (with 32-bit intrinsics) for 32-bit x86
-      - Assmbly code for ARM Cortex M0+
+      - Assembly code for ARM Cortex M0+
 
     While this implementation was written for research and demonstration
     purposes, it follows APIs and conventions appropriate for general
