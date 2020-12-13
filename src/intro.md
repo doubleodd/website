@@ -1,3 +1,14 @@
+<style type="text/css">
+    .coal img {
+        background-color: #E0E0E0;
+    }
+    .navy img {
+        background-color: #E0E0E0;
+    }
+    .ayu img {
+        background-color: #E0E0E0;
+    }
+</style>
 # A Geometrical Introduction to Double-Odd Elliptic Curves
 
 To give an intuition about double-odd elliptic curves, why we use them
@@ -22,7 +33,7 @@ to the underlying ideas.
 Let's start with a classic "short Weierstraß" curve and the definition
 of point addition, as show below.
 
-<img style="float: left; width: 40%; padding: 2em;" src="curve1-add.svg" />
+<img style="float: left; width: 40%; padding: 0.5em; margin: 1.5em;" src="curve1-add.svg" />
 
 The curve here is the set of points \\(x, y\\) that fulfill the
 curve equation \\(y^2 = x^3 + Ax + B\\) for two given constants \\(A\\)
@@ -115,7 +126,7 @@ curves can have nice characteristics:
 
 ### Twisted Edwards Curves and Montgomery Curves
 
-<img style="float: right; width: 40%; padding: 2em;" src="edwards1.svg" />
+<img style="float: right; width: 40%; padding: 0.5em; margin: 1.5em;" src="edwards1.svg" />
 
 *Twisted Edwards curves* use a different kind of polynomial equation (of
 degree 4) that leads to the shape shown here; the point addition rule is
@@ -228,7 +239,7 @@ multiplication by a scalar, so any gains in that area are most welcome.
 Let's consider a curve \\(E\\) with order \\(2r\\) for some odd integer
 \\(r\\) (in practice, we'll choose a curve such that \\(r\\) is prime).
 
-<img style="float: left; width: 40%; padding: 2em;" src="curve2-changeofvariable.svg" />
+<img style="float: left; width: 40%; padding: 0.5em; margin: 1.5em;" src="curve2-changeofvariable.svg" />
 
 A double-odd curve necessarily has a single point of order 2, i.e. a point
 which, added to itself, yields the point-at-infinity. Equivalently, points
@@ -263,7 +274,7 @@ Let's now consider a point \\(P\\) on the curve (distinct from \\(N\\),
 and not the point-at-infinity either), and the addition of \\(N\\) to
 \\(P\\).
 
-<img style="float: right; width: 40%; padding: 2em;" src="curve3-addN.svg" />
+<img style="float: right; width: 40%; padding: 0.5em; margin: 1.5em;" src="curve3-addN.svg" />
 
 By the geometrical definition of the point addition, we draw the line
 \\((PN)\\), which then intersects the curve on a third point, which is
@@ -319,7 +330,7 @@ Thus, the total cost of decoding and encoding can realistically be lower
 than that of Decaf/Ristretto, and close to what is obtained with plain
 Weierstraß curves or twisted Edwards curves.
 
-<img style="float: right; width: 40%; padding: 2em;" src="curve4-addNxw.svg" />
+<img style="float: right; width: 40%; padding: 0.5em; margin: 1.5em;" src="curve4-addNxw.svg" />
 
 Since encoding uses \\(w\\), we can use it directly as a point
 coordinate, as a replacement to \\(y\\). This does not lose information,
@@ -340,7 +351,7 @@ use \\(u = x/y\\) (instead of \\(w = y/x\\)) which can be extended to
 
 Let's consider the exceptional case of adding a point \\(P\\) to itself.
 
-<img style="float: left; width: 40%; padding: 2em;" src="curve5-double.svg" />
+<img style="float: left; width: 40%; padding: 0.5em; margin: 1.5em;" src="curve5-double.svg" />
 
 The classical definition involves taking the tangent to the curve on
 point \\(P\\) as the line that leads to \\(-(P+P)\\). This is
@@ -355,7 +366,7 @@ previously, from a point \\(P\\), we can obtain \\(P+N\\) easily. This
 leads to the idea of computing an addition \\(P+Q\\) as the sum of
 \\(P\\) and \\(Q+N\\).
 
-<img style="float: right; width: 40%; padding: 2em;" src="curve6-doublewithN.svg" />
+<img style="float: right; width: 40%; padding: 0.5em; margin: 1.5em;" src="curve6-doublewithN.svg" />
 
 As is illustrated on this figure, \\(P\\) and \\(P+N\\) are distinct
 points, and not opposite to each other, so that addition of \\(P\\)
