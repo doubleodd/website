@@ -11,7 +11,7 @@ enforce that \\(a = -1\\) and \\(b = 1/2\\).
 
 We apply the following criteria:
 
-  - Curve equation is \\(y^2 = x(x^2 + x - 1/2)\\).
+  - Curve equation is \\(y^2 = x(x^2 - x + 1/2)\\).
 
   - Modulus \\(q = 2^{255} - m\\) should be equal to 3 modulo 8. This
     is needed for the curve with that equation to be a double-odd curve.
