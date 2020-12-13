@@ -28,7 +28,7 @@ we observe that when applying the isogeny \\(\theta_1\\) on a point
 \\[\begin{eqnarray*}
     X' &=& (a^2 - 4b) XZ \\\\
     Z' &=& X^2 + aXZ + bZ^2 \\\\
-       &=& (X + Z)(X + bZ) - (a - 1 - b)XZ
+       &=& (X + Z)(X + bZ) + (a - 1 - b)XZ
 \end{eqnarray*}\\]
 with a cost of 2M. We can similarly compute \\(\theta_{1/2}\\) on that
 point \\(P'\\) with cost 2M, and that yields the \\(x\\) coordinate of
