@@ -42,7 +42,8 @@ The [whitepaper](doubleodd.pdf) contains all the formulas and
 demonstrations; it also specifies the use of do255e and do255s in
 higher-level cryptographic functionalities (key pair generation, key
 exchange, signature, and hash-to-curve). Most of the present site
-consists in extracts from this whitepaper.
+consists in extracts from this whitepaper. **Note:** the whitepaper
+is now also [published on ePrint](https://eprint.iacr.org/2020/1558).
 
 Several implementations of do255e and do255s exist and are listed
 in the [implementations section](implementations.md).
