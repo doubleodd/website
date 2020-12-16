@@ -34,8 +34,8 @@ representation of the \\((x, u)\\) coordinates. Namely, a point
 with \\(ZT \neq 0\\), and such that \\(x = X/Z\\) and \\(u = U/T\\).
 
 Since \\(u = 1/w\\), decoding of a point from its external
-representation (encoding of the value \\(w\\)) into fractional \\(x,
-u\\) is done in the same way as in \\((x, w)\\) coordinates; when
+representation (encoding of the value \\(w\\)) into fractional \\((x,
+u)\\) is done in the same way as in \\((x, w)\\) coordinates; when
 \\(x\\) and \\(w\\) have been obtained, the fractional coordinates are
 set to \\((x{:}1{:}1{:}w)\\) (with only a special treatment for the case
 of the neutral \\(N\\)).

@@ -79,7 +79,7 @@ can somehow be handled by switching to fractional coordinates, in which
 each coordinate is represented by a fraction. In that case, infinity
 corresponds to a denominator value of zero. There are several well-known
 systems of coordinates that use fractions, e.g. *projective coordinates*
-(\\(x, y) = (X/Z, Y/Z)\\)) or *Jacobian coordinates* (\\(x, y) = (X/Z^2,
+(\\((x, y) = (X/Z, Y/Z)\\)) or *Jacobian coordinates* (\\((x, y) = (X/Z^2,
 Y/Z^3)\\)). Formulas working on fractional coordinates can be
 established, that will handle infinities, and have the added benefit of
 allowing most computations to be done only with additions, subtractions
@@ -302,7 +302,7 @@ analytically from the following:
 
   - Every element of \\(E[r]\\) is the double of some other point
     (because \\(P = (r+1)P\\), and \\(r+1\\) is an even integer),
-    and the \\(x\\) coordinate of the double of \\(x, y\\) is
+    and the \\(x\\) coordinate of the double of \\((x, y)\\) is
     computed as \\(((x^2-b)/(2y))^2\\), which is a square.
 
   - If \\(P = (x, y)\\) then \\(P+N = (b/x, -by/x^2)\\), and since
