@@ -64,6 +64,9 @@ Subsequent pages in this site include the following:
     do255e and do255s. Selection criteria and curve parameters are
     provided.
 
+  - Some [benchmarks](benchmarks.md) on large (x86) and small (ARM
+    Cortex M0+ and M4) architectures are detailed.
+
   - Available [open-source implementations](implementations.md) are
     listed.
 

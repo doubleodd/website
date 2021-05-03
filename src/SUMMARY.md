@@ -10,4 +10,5 @@
 - [Curve Choices](curves.md)
   - [do255e](params-do255e.md)
   - [do255s](params-do255s.md)
+- [Benchmarks](benchmarks.md)
 - [Implementations](implementations.md)

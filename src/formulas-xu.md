@@ -73,7 +73,7 @@ with the help of two precomputed constants \\(\alpha =
 The cost of 10M assumes that multiplication by constants \\(a\\),
 \\(b\\), \\(\alpha\\) and \\(\beta\\) is inexpensive, i.e. that these
 are all small integers or easily computed fractions such as \\(1/2\\).
-Also, \\(\alpha\\) and \\(\beta\\) are not defined in \\(a = 2b\\); in
+Also, \\(\alpha\\) and \\(\beta\\) are not defined if \\(a = 2b\\); in
 such a case, the implementation can still use the algorithm above by
 working on an isomorphic curve where \\(a \neq 2b\\). Indeed, the
 transform \\((x, u) \mapsto (2x, u/2)\\) is an easily computable
