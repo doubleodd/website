@@ -31,22 +31,41 @@ Some highlights of double-odd elliptic curves are:
     multiplications (down to 1M+5S for some specific curves).
 
 In order to leverage these techniques, two specific double-odd elliptic
-curves are defined: do255e and do255s. Both provide "128-bit security"
-(technically, 127 bits); do255e is a GLV curve that can leverage an
-internal endomorphism for further improved performance, while do255s is
-a perfectly ordinary curve.
+curves, on which we define the prime-order groups jq255e and jq255s (the
+original version of this work defined the do255e and do255s; the "jq"
+groups are algebraically identical, but use a different encoding
+process). Both provide "128-bit security" (technically, 127 bits);
+jq255e is a GLV curve that can leverage an internal endomorphism for
+further improved performance, while jq255s is a perfectly ordinary
+curve.
+
+(**New: 2022-08-13**) The original do255e and do255s have been
+reinterpreted into a subcase of Jacobi quartics, from which we obtain
+the new groups jq255e and jq255s (same groups as previously but a
+different encoding format). They have **faster formulas** and in
+particular a better encoding and decoding (as efficient as plain Ed25519
+point compression). On top of jq255e and jq255s, we define **short
+signatures** of length 48 bytes, noticeably shorter than the usual
+64-byte signatures of Ed25519 or P-256/ECDSA; this also makes signature
+verification faster, down to about 93000 cycles on a 64-bit x86 system
+(Coffee Lake core).
 
 ## Resources
 
-The [whitepaper](doubleodd.pdf) contains all the formulas and
+The [original whitepaper](doubleodd.pdf) contains all the formulas and
 demonstrations; it also specifies the use of do255e and do255s in
 higher-level cryptographic functionalities (key pair generation, key
-exchange, signature, and hash-to-curve). Most of the present site
-consists in extracts from this whitepaper. **Note:** the whitepaper
-is now also [published on ePrint](https://eprint.iacr.org/2020/1558).
+exchange, signature, and hash-to-curve). The [additional
+whitepaper](doubleodd-jq.pdf) presents the reinterpretation of
+double-odd curves as Jacobi quartics, leading to the jq255e and jq255s
+groups, and new specifications of the higher-level crpytographic
+schemes, in particular *short signatures*.
 
-Several implementations of do255e and do255s exist and are listed
-in the [implementations section](implementations.md).
+**Note:** the original whitepaper is also [published on
+ePrint](https://eprint.iacr.org/2020/1558).
+
+Several implementations of jq255e, jq255s, do255e and do255s exist and
+are listed in the [implementations section](implementations.md).
 
 ## Outline
 
@@ -56,13 +75,24 @@ Subsequent pages in this site include the following:
     a self-contained explanatory text (with pictures)
     to explain the motivation and the core ideas of this work.
 
+  - (**New: 2022-08-13**) [Double-odd Jacobi quartics](jacobi.md) presents
+    the reinterpretation of double-odd curves as a special case of
+    Jacobi quartics, which leads to faster formulas and an improved
+    decoding process.
+
+  - (**New: 2022-08-13**) The [short signatures](shortsig.md) describes
+    the signature scheme specified on the jq255e and jq255s groups, i.e.
+    the double-odd curves interpreted as Jacobi quartics. This scheme
+    makes signature substantially shorter (48 bytes instead of 64), and
+    also speeds up signature verification.
+
   - The [formulas section](formulas.md) lists useful formulas for
     computing over points of double-odd elliptic curves with several
     convenient systems of coordinates.
 
   - Explicit [curve choices](curves.md) are listed: these are curves
-    do255e and do255s. Selection criteria and curve parameters are
-    provided.
+    do255e/jq255e and do255s/jq255s. Selection criteria and curve
+    parameters are provided.
 
   - Some [benchmarks](benchmarks.md) on large (x86) and small (ARM
     Cortex M0+ and M4) architectures are detailed.

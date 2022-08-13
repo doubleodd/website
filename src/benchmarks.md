@@ -1,39 +1,114 @@
 # Benchmarks
 
-We list here some speed benchmarks of do255e and do255s curves,
-implemented in C (with assembly) on x86 (Coffee Lake), ARM Cortex M0+
-and ARM Cortex M4 systems. These implementations are published on:
+We list here some speed benchmarks of double-odd curves.
+
+## Double-Odd Jacobi Quartics
+
+The main implementation for jq255e and jq255s are in Rust, as part of
+the [crrl library](https://github.com/pornin/crrl); since that library
+also implements Ed25519, this allows comparing the relative performance
+of the curves. On an Intel x86 i5-8259U (Coffee Lake core), with Rust
+1.59.0, compiled with the "`-C target-cpu=native`" flags, the following
+values are obtained (in clock cycles):
+
+| Operation     |       jq255e |       jq255s |      Ed25519 |
+| :------------ | -----------: | -----------: | -----------: |
+| Decode point  |         9371 |         9295 |         9491 |
+| Encode point  |         7847 |         7874 |         7864 |
+| Point mul     |        72080 |       107875 |       107730 |
+| Point mulgen  |        43570 |        44915 |        40456 |
+| Sign          |        54738 |        56160 |        51581 |
+| Verify        |        82839 |        86837 |       113983 |
+
+These are the measured operations:
+
+  - *Decode point*: read 32 bytes, and decode these into a curve point.
+    This includes validation that the point is correctly on the curve.
+    Main operation is a square root computation (a merged square root and
+    inversion for Ed25519).
+
+  - *Encode point*: encode a point into 32 bytes. The point is the
+    output of some computations, i.e. not necessarily in already
+    normalized affine coordinates. Main operation is an inversion
+    in the field. Note: for Ristretto255, this operation is somewhat
+    more expensive, at about 9800 cycles.
+
+  - *Point mul*: multiply a point by a given scalar. An ECDH key
+    exchange will primarily use this operation, as well as a point
+    decode (on the peer's public key) and a point encode (on the
+    resulting shared secret point).
+
+  - *Point mulgen*: multiply the conventional generator (base point) by
+    a scalar. In all three curves, the implementation uses four
+    precomputed tables, each containing 16 points in extended affine
+    coordinates, for a total of 6144 bytes. Some minor speed-ups could
+    be achieved with more or larger tables.
+
+  - *Sign*: sign some data. This assumes that the signer's private key
+    has already been loaded in RAM, along with the encoding of the
+    signer's public key (if not stored along, then the public key can
+    be recomputed from the private key, at the cost of one mulgen
+    and one encode operations).
+
+  - *Verify*: verify a signature. This assumes that the signer's public
+    key has already been decoded into a point; add the cost of a point
+    decode operation to get the total verification cost using a
+    32-byte-encoded public key.
+
+All these operations are implemented in pure constant-time code, except
+signature verification, which is assumed to operate only on public data.
+
+**Commentary:** we see that double-odd curve are on par with Ed25519 for
+most operations (Ristretto offers the same performance as Ed25519,
+except for point encoding, which is slightly slower since it involves a
+square root operation). Ed25519 is slightly better for operations that
+use mostly general point additions, while jq255e and jq255s are slightly
+faster for point doublings. Jq255e, specifically, benefits from the
+GLV endomorphism for computing general point multiplications by a scalar.
+Signature verification on jq255e and jq255s is quite faster than on
+Ed25519 thanks to the use of [short signatures](shortsig.md).
+
+## Original Double-Odd Curves Benchmarks
+
+The [original whitepaper](whitepaper.pdf) defined the do255e and do255s
+groups, which were implemented in C (with assembly) on x86 (Coffee
+Lake), ARM Cortex M0+ and ARM Cortex M4 systems. These implementations
+are published on:
 [https://github.com/doubleodd/c-do255](https://github.com/doubleodd/c-do255)
 
 All values are expressed in clock cycles on their respective platforms.
+Take care that the described operations are slightly distinct from the
+one uised above; in particular, the "verify (with pubdec)" operation
+combines the decoding of the public key and the actual signature
+verification.
 
-## Results
+### Results
 
 For **do255e**, the following timings are obtained (X25519 values listed
 for reference):
 
-| Operation    | x86 (64-bit) | ARM Cortex M0+ | ARM Cortex M4 |
-| :----------- | -----------: | -------------: | ------------: |
-| keygen       |        47974 |        1422257 |        270235 |
-| key exchange |       100834 |        2616600 |        492927 |
-| sign         |        52324 |        1502127 |        316991 |
-| verify (avg) |       110226 |        3255070 |        558732 |
-| mul          |        75296 |        2192130 |        385869 |
-| mulgen       |        41110 |        1363789 |        243046 |
-| X25519       |        95437 |        3229983 |        563310 |
+| Operation            | x86 (64-bit) | ARM Cortex M0+ | ARM Cortex M4 |
+| :------------------- | -----------: | -------------: | ------------: |
+| keygen               |        47974 |        1422257 |        270235 |
+| key exchange         |       100834 |        2616600 |        492927 |
+| sign                 |        52324 |        1502127 |        316991 |
+| verify (with pubdec) |       110226 |        3255070 |        558732 |
+| mul                  |        75296 |        2192130 |        385869 |
+| mulgen               |        41110 |        1363789 |        243046 |
+| X25519               |        95437 |        3229983 |        563310 |
 
 Curve do255e benefits from the efficient endomorphism. Curve **do255s**
 does not, yielding somewhat larger costs:
 
-| Operation    | x86 (64-bit) | ARM Cortex M0+ | ARM Cortex M4 |
-| :----------- | -----------: | -------------: | ------------: |
-| keygen       |        52272 |        1572978 |        298080 |
-| key exchange |       141992 |        3591395 |        654557 |
-| sign         |        56806 |        1653043 |        344930 |
-| verify (avg) |       158780 |        3746889 |        700994 |
-| mul          |       116702 |        3173254 |        548706 |
-| mulgen       |        45456 |        1514461 |        270870 |
-| X25519       |        95437 |        3229983 |        563310 |
+| Operation            | x86 (64-bit) | ARM Cortex M0+ | ARM Cortex M4 |
+| :------------------- | -----------: | -------------: | ------------: |
+| keygen               |        52272 |        1572978 |        298080 |
+| key exchange         |       141992 |        3591395 |        654557 |
+| sign                 |        56806 |        1653043 |        344930 |
+| verify (with pubdec) |       158780 |        3746889 |        700994 |
+| mul                  |       116702 |        3173254 |        548706 |
+| mulgen               |        45456 |        1514461 |        270870 |
+| X25519               |        95437 |        3229983 |        563310 |
 
 **Commentary:** while the main benefit of double-odd curves is that they
 provide a prime-order group with canonical encodings and decodings,
@@ -44,7 +119,7 @@ time being more versatile since it inherently supports the usual panoply
 of group-related functionalities (Diffie-Hellman key exchange, Schnorr
 signatures).
 
-## Operations
+### Operations
 
 The measured operations are the following:
 

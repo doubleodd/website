@@ -1,17 +1,19 @@
 # Curve Choices
 
 We define two specific sets of curve parameters for double-odd curves
-that leverage the formulas for good performance: do255e and do255s. The
-do255e curve is a GLV curve (with equation \\(y^2 = x(x^2 + b)\\)) which
-permits use of our doubling formulas with the lowest per-doubling cost
-(1M+5S). GLV curves feature some extra structure, namely a fast
-endomorphism on the curve that can be leveraged to considerably speed up
-point multiplication. Since this extra structure has historically
-generated unease about security (no weakness was found, but these curves
-are still admittedly "special" in a fuzzy way), we also define do255s,
-an ordinary curve with no such structure. do255s uses the equation
-\\(y^2 = x(x^2 - x + 1/2)\\), for which we have doubling formulas in
-cost 2M+4S.
+that leverage the formulas for good performance: do255e and do255s.
+These curves, when using their Jacobi quartic representation and
+associated improved encoding formats, are called jq255e and jq255s,
+respectively. The do255e / jq255e curve is a GLV curve (with equation
+\\(y^2 = x(x^2 + b)\\)) which permits use of our doubling formulas with
+the lowest per-doubling cost (1M+5S). GLV curves feature some extra
+structure, namely a fast endomorphism on the curve that can be leveraged
+to substantially speed up point multiplication. Since this extra
+structure has historically generated unease about security (no weakness
+was found, but these curves are still admittedly "special" in a fuzzy
+way), we also define do255s / jq255s, an ordinary curve with no such
+structure. do255s uses the equation \\(y^2 = x(x^2 - x + 1/2)\\), for
+which we have doubling formulas in cost 2M+4S.
 
 In both cases, the base field is chosen to be the field of integers
 modulo \\(q = 2^{255} - m\\) for a small integer \\(m\\); the value of
@@ -43,5 +45,5 @@ in the \\(0...q-1\\) range.
 
 Specific parameters are provided in the following sub-pages:
 
-  - [do255e](params-do255e.md)
-  - [do255s](params-do255s.md)
+  - [do255e / jq255e](params-do255e.md)
+  - [do255s / jq255s](params-do255s.md)

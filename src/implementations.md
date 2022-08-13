@@ -1,5 +1,60 @@
 # Implementations
 
+## jq255e and jq255s
+
+The following open-source implementations of jq255e and jq255s are
+available:
+
+  - **Reference implementation** in Python:
+
+    [https://github.com/doubleodd/py-jq255](https://github.com/doubleodd/py-jq255)
+
+    This implementation is only for reference purposes; it computes
+    correct values, but does so in a sub-optimal way and, crucially,
+    is not free of timing-based side channels, since it relies on
+    Python's big integers.
+
+    This repository includes comprehensive test vectors for curves
+    do255e and do255s (both low-level operations such as point addition,
+    and high-level functionalities: key exchange, signature,
+    hash-to-curve). The script that generates these vectors leverages
+    the Python implementation.
+
+  - **Rust implementation**:
+
+    Jq255e and jq255s are implemented by the crrl library, in the
+    `jq255e` and `jq255s` modules, respectively:
+
+    [https://github.com/pornin/crrl](https://github.com/pornin/crrl)
+
+    The code includes a 32-bit and a 64-bit backends. No assembly is
+    used. On x86 systems, intrisic functions are used for additions and
+    subtractions with carry propagation, but the code also works on
+    non-x86 targets. This is the implementation of jq255e and jq255s
+    that currently offers the best performance. It is fully constant-time
+    for all secret data.
+
+  - **C implementation**:
+
+    A stand-alone C implementation of jq255e and jq255s is provided in:
+
+    [https://github.com/doubleodd/c-jq255](https://github.com/doubleodd/c-jq255)
+
+    The C code provides the high-level operations (keygen, sign, verify,
+    ECDH key exchange) but does not export generic group operations in
+    its API. This code is meant for easy integration in applications,
+    with a limited number of source code files, no external dependency,
+    and no dynamic memory allocation. All the code is constant-time for
+    all secret data. Its performance is close to that of the Rust crrl
+    implementation.
+
+## do255e and do255s
+
+We list here the original implementations of do255e and do255s. Generally
+speaking, jq255e and jq255s are now preferred, since they offer better
+performance. These older implementations will be converted to jq255e and
+jq255s in the future.
+
 The following open-source (MIT license) implementations of curves
 do255e and do255s are available:
 
