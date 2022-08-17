@@ -58,11 +58,15 @@ higher-level cryptographic functionalities (key pair generation, key
 exchange, signature, and hash-to-curve). The [additional
 whitepaper](doubleodd-jq.pdf) presents the reinterpretation of
 double-odd curves as Jacobi quartics, leading to the jq255e and jq255s
-groups, and new specifications of the higher-level crpytographic
+groups, and new specifications of the higher-level cryptographic
 schemes, in particular *short signatures*.
 
-**Note:** the original whitepaper is also [published on
-ePrint](https://eprint.iacr.org/2020/1558).
+**Note:** both the original whitepaper and the additional whitepapers
+are also published on ePrint:
+
+  - [original whitepaper](https://eprint.iacr.org/2020/1558)
+
+  - [additional whitepaper](https://eprint.iacr.org/2022/1052)
 
 Several implementations of jq255e, jq255s, do255e and do255s exist and
 are listed in the [implementations section](implementations.md).
