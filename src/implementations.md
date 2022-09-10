@@ -48,6 +48,17 @@ available:
     all secret data. Its performance is close to that of the Rust crrl
     implementation.
 
+  - **Go implementation**:
+
+    [https://github.com/doubleodd/go-jq255](https://github.com/doubleodd/go-jq255)
+
+    The Go implementation is considered correct and secure; all the code
+    is strictly constant-time. It is pure Go code that should run on any
+    supported Go platform. It internally uses 64-bit types with
+    `math/bits` functionalities (especially `Add64()`, `Sub64()` and
+    `Mul64()`) which provide decent performance in a portable way on
+    64-bit platforms.
+
 ## do255e and do255s
 
 We list here the original implementations of do255e and do255s. Generally
