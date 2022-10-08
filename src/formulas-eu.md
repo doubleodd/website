@@ -21,7 +21,7 @@ Given \\(P_1 = (e_1, u_1)\\) and \\(P_2 = (e_2, u_2)\\), their sum
     e_3 &=& \frac{(1 + (a^2-4b) u_1^2 u_2^2)(e_1 e_2 - 2a u_1 u_2)
         + 2(a^2-4b) u_1 u_2 (u_1^2 + u_2^2)}
         {(1 - (a^2-4b) u_1^2 u_2^2)^2} \\\\
-    u_3 &=& \frac{u_1 e2 + u_2 e_1}{1 - (a^2-4b) u_1^2 u_2^2}
+    u_3 &=& \frac{u_1 e_2 + u_2 e_1}{1 - (a^2-4b) u_1^2 u_2^2}
 \end{eqnarray*}\\]
 
 These formulas are **complete** (they are complete for Jacobi quartics
